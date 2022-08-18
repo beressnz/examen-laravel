@@ -87,7 +87,7 @@
                                                 </div>
                                                 
                                                 <div class="col-xs-4 col-sm-4 col-md-4">
-                                                    <a class=" btn btn-success btn  btn-block" href="" >Validar</a>
+                                                    <button class=" btn btn-success btn  btn-block" id="validarMoneda" type="button" >Validar</button >
                                                 </div>
                                             </div>
                                         </div>
@@ -107,7 +107,7 @@
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <input type="text" name="salarioPesos" id="salarioPesos" class="form-control input-sm" placeholder="salario en pesos" value="{{old('salarioPesos',$empleados->salarioPesos)}}">
+                                            <input type="text" name="salarioPesos" id="salarioPesos" class="form-control input-sm" placeholder="salario en pesos" value="{{old('salarioPesos',$empleados->salarioPesos)}}" readonly>
                                             @if ($errors->has('salarioPesos'))
                                                 <span class="alert-danger">
                                                     <strong>{{ $errors->first('salarioPesos') }}</strong>
@@ -140,11 +140,11 @@
                                     </div>
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                        
-                                        <!-- <div class="form-check">
-                                            <input type="checkbox" name="activo" id="activo" class="form-check-input" value="{{old('direccion',$empleados->activo)}}"
+                                        <div class="form-check">
+                                            <input type="checkbox" name="activo" id="activo" class="form-check-input" value="1" value="{{old('direccion',$empleados->activo)}}"
                                                     {{$empleados->activo == 1 ? 'checked' : ''}}>
                                             <label class="form-check-label" for="exampleCheck1">Activo</label>
-                                        </div> -->
+                                        </div>
                                             
                                     </div>
                                        
@@ -168,8 +168,6 @@
 
         <script type="text/javascript">
 
-            
-
             $(document).on('click','#validarMoneda', function(){      
                 var moneda = $('#salarioDolares').val();
                 $.ajax({
@@ -182,15 +180,9 @@
                     if(response.cambio===true){
                         
                     $("#salarioPesos").val(response.data); 
-                    //     //$("#moneda-false").empty();
-                    console.log(response.data);
+                   
                     }
-                    // if(response.valido===false){
                     
-                    //     $("#moneda-false").text(response.data);
-                    //     $("#moneda-true").empty();
-                    // }
-                    console.log(response.data);
                     
                 }
                 });  

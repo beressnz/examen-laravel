@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <input type="number" name="salarioPesos" id="salarioPesos" step="any" class="form-control input-sm" placeholder="Salario en pesos" value="{{old('salarioPesos')}}">
+                                            <input type="number" name="salarioPesos" id="salarioPesos" step="any" class="form-control input-sm" placeholder="Salario en pesos" value="{{old('salarioPesos')}}" readonly>
                                             @if ($errors->has('salarioPesos'))
                                                 <span class="alert-danger">
                                                     <strong>{{ $errors->first('salarioPesos') }}</strong>
@@ -133,7 +133,7 @@
 
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6 col-md-6">
-                                        <input type="text" name="direccion" id="direccion" class="form-control input-sm" placeholder="direccion" value="{{old('direccion')}}" >
+                                        <input type="text" name="direccion" id="direccion" class="form-control input-sm" placeholder="Direccion" value="{{old('direccion')}}" >
                                         @if ($errors->has('direccion'))
                                             <span class="alert-danger">
                                                 <strong>{{ $errors->first('direccion') }}</strong>
@@ -171,8 +171,6 @@
 
         <script type="text/javascript">
 
-            
-
             $(document).on('click','#validarMoneda', function(){      
                 var moneda = $('#salarioDolares').val();
                 $.ajax({
@@ -185,15 +183,8 @@
                     if(response.cambio===true){
                         
                     $("#salarioPesos").val(response.data); 
-                    //     //$("#moneda-false").empty();
-                    console.log(response.data);
+                
                     }
-                    // if(response.valido===false){
-                    
-                    //     $("#moneda-false").text(response.data);
-                    //     $("#moneda-true").empty();
-                    // }
-                    console.log(response.data);
                     
                 }
                 });  

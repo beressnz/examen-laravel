@@ -38,9 +38,6 @@ class EmpleadoController extends Controller
     public function create()
     {
         //
-        // $estados=$this->wsObtenerEstado();
-        // $monedas=$this->wsObtenerMoneda();
-        // return view('Empleado.create',compact('estados','monedas'));
         return view('empleado.create');
     }
 
@@ -56,13 +53,13 @@ class EmpleadoController extends Controller
 
         if($this->validate(
                             $request,['codigo'=>'required | unique:empleado',
-                                     'nombre'=>'required ',
+                                     'nombre'=>'required | regex:/[a-zA-Z\s]+$/',
                                      'salarioDolares'=>'required|numeric|min:0|not_in:0',
                                      'salarioPesos'=>'required|numeric|min:0|not_in:0',
                                      'direccion'=>'required',
                                      'estado'=>'required',
                                      'ciudad'=>'required',
-                                     'telefono'=>'required |regex:/[0-9]{10}/',
+                                     'telefono'=>'required |numeric|regex:/[0-9]{10}/',
                                      'correo'=>'required |email'
                                      
                                     ]
@@ -98,15 +95,24 @@ class EmpleadoController extends Controller
         ->where('id', $id)
         ->first()
         ->salarioDolares;
-        $porcentajeD = ( $dolar*5/100)*6;
-        $dolaresMeses=$dolar+$porcentajeD;
-
+        
         $peso = Empleado::select('salarioPesos')
         ->where('id', $id)
         ->first()
         ->salarioPesos;
-        $porcentajeM = ( $peso*5/100)*6;
-        $pesosMeses=$peso+$porcentajeM;
+
+        for ($i = 1; $i <= 6; $i++) {
+                        
+            $porcentajeD = ( $dolar*5/100);
+            $dolar= $dolar+ $porcentajeD;
+
+            $porcentajeM = ( $peso*5/100);
+            $peso=$peso +$porcentajeM;
+            $i+1;
+        }
+
+        $dolaresMeses=$dolar;
+        $pesosMeses=$peso;
 
         $empleados = Empleado::find($id);
         return view('empleado.show',compact('empleados','dolaresMeses','pesosMeses'));
@@ -144,7 +150,7 @@ class EmpleadoController extends Controller
                      'direccion'=>'required',
                      'estado'=>'required',
                      'ciudad'=>'required',
-                     'telefono'=>'required |regex:/[0-9]{10}/',
+                     'telefono'=>'required |numeric|regex:/[0-9]{10}/',
                      'correo'=>'required |email',
         ]);
 
@@ -209,13 +215,9 @@ class EmpleadoController extends Controller
         $client = new HttpClient([
             'base_uri' => 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/'
         ]);
-        $response = $client->request('GET', 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SP74665,SF61745,SF60634,SF43718,SF43773/datos//2022-01-01/2022-01-08', 
+        $response = $client->request('GET', 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno?token=806bbe98461fb2b1390a2f2135136763d80fb04e5e17e6d5825ebba46fe76f7d', 
         [
-            'headers' => 
-            [       
-                    'Content-Type' => "application/json",
-                    'Bmx-Token' => "806bbe98461fb2b1390a2f2135136763d80fb04e5e17e6d5825ebba46fe76f7d",
-            ],
+            
             'timeout' => 20, 
             'connect_timeout' => 20, 
         ]);

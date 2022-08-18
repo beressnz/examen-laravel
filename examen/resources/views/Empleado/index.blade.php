@@ -19,7 +19,7 @@
                         <div class="pull-left"><h3>Lista empleados</h3></div>
                         <div class="pull-right">
                             <div class="btn-group"> 
-                                <a href="{{ route('empleado.create') }}" class="btn btn-info" >Añadir empleado</a>
+                                <a href="{{ route('empleado.create') }}" class="btn btn btn-primary" >Agregar empleado</a>
                             </div>
                         </div>
                         <div class="table-container">
@@ -30,9 +30,10 @@
                                 <th>Salario en dolares</th>
                                 <th>Salario en pesos</th>
                                 <th>Correo</th>
+                                <th>Activo</th>
                                 <th>Show</th>
                                 <th>Editar</th>
-                                <th>Activo</th>
+                                <th>Activar/Desactivar</th>
                                 <th>Eliminar</th>
                                 </thead>
                                 <tbody>
@@ -44,9 +45,14 @@
                                             <td>{{$empleado->salarioDolares}}</td>
                                             <td>{{$empleado->salarioPesos}}</td>
                                             <td>{{$empleado->correo}}</td>
-                                            <td class="text-center"><a class="btn btn-primary btn-sm" href="{{action('EmpleadoController@show', $empleado->id)}}" ><span class="glyphicon glyphicon-off"></span></a></td>
+                                            @if($empleado->activo ===1 )
+                                                <td class="text-success text-center"> <b>Si</b></td>
+                                            @else
+                                                <td class="text-danger text-center"> <b>No</b></td>
+                                            @endif
+                                            <td class="text-center"><a class="btn btn-info btn-sm" href="{{action('EmpleadoController@show', $empleado->id)}}" >Ver</a></td>
                                                                                        
-                                            <td class="text-center"><a class="btn btn-primary btn-sm" href="{{action('EmpleadoController@edit', $empleado->id)}}" ><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                            <td class="text-center"><a class="btn btn-primary btn-sm" href="{{action('EmpleadoController@edit', $empleado->id)}}" >Editar</a></td>
                                             @if($empleado->activo ===1 )
                                             <td class="text-center">
                                                 <form action="{{action('EmpleadoController@activar', $empleado->id)}}" method="get">
@@ -75,7 +81,7 @@
                                                     {{csrf_field()}}
                                                     <input name="_method" type="hidden" value="DELETE">
 
-                                                    <button class="btn btn-danger btn-sm" type="submit"><span class="glyphicon glyphicon-trash"></span></button>
+                                                    <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
 
                                                 </form>
                                             </td>
