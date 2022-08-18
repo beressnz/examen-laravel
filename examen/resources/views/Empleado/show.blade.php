@@ -71,6 +71,20 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Salario en dolares</label>
+                                        <input class="form-control" type="text" placeholder="{{$dolaresMeses}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Salario en pesos</label>
+                                        <input class="form-control" type="text" placeholder="{{$pesosMeses}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Activo</label>
                                         @if($empleados->activo ===1 )
                                                 

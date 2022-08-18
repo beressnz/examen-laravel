@@ -80,6 +80,10 @@
                                                             <strong>{{ $errors->first('salarioDolares') }}</strong>
                                                         </span>
                                                     @endif
+
+                                                    <span class="alert-danger" id="dolarInvalido">
+                                                        <strong> </strong>
+                                                    </span>
                                                 </div>
                                                 
                                                 <div class="col-xs-4 col-sm-4 col-md-4">
@@ -145,7 +149,7 @@
                                     </div>
                                        
                                 </div>
-                                
+                                <br>
                                 <div class="row">
 
                                     <div class="col-xs-12 col-sm-12 col-md-12">

@@ -94,8 +94,22 @@ class EmpleadoController extends Controller
     public function show($id)
     {
         //
+        $dolar = Empleado::select('salarioDolares')
+        ->where('id', $id)
+        ->first()
+        ->salarioDolares;
+        $porcentajeD = ( $dolar*5/100)*6;
+        $dolaresMeses=$dolar+$porcentajeD;
+
+        $peso = Empleado::select('salarioPesos')
+        ->where('id', $id)
+        ->first()
+        ->salarioPesos;
+        $porcentajeM = ( $peso*5/100)*6;
+        $pesosMeses=$peso+$porcentajeM;
+
         $empleados = Empleado::find($id);
-        return view('empleado.show',compact('empleados'));
+        return view('empleado.show',compact('empleados','dolaresMeses','pesosMeses'));
     }
 
     /**
@@ -106,15 +120,7 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
-        // $estados=$this->wsObtenerEstado();
-        // $monedas=$this->wsObtenerMoneda();
-        // $empleado = Empleado::find($id);
-        // return view('empleado.edit',compact('empleado','estados','monedas'));
-
-       
-        // $empleados = Empleado::find($id);
-        // return view('empleado.show',compact('empleados'));
+        
         $empleados = Empleado::find($id);
         return view('empleado.edit',compact('empleados'));
     }
@@ -170,7 +176,6 @@ class EmpleadoController extends Controller
     {
         //
         Empleado::where('id', $id)->update(array('eliminado' => 1));
-        //Empleado::find($id)->delete();
         return redirect()->route('empleado.index')->with('success','Registro eliminado correctamente');
     }
 
